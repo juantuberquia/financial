@@ -6,12 +6,11 @@ const Budget = () => {
   // hooks setear el valor ingresado
   const [budgetValue, setbudgetValue] = useState(0);
   // hooks error datos ingresados incorrectos
-  const [ErrorData, setErrorData] = useState(false);
+  const [ErrorData, setErrorData] = useState("");
   // hooks bugget empty
-  const [EmptyData, setEmptyData] = useState(false);
-  // hooks gastos y presupuesto
-  // const [expenses, setExpenses] = useState(0);
-  // const [funds, setFunds] = useState(0);
+  const [EmptyData, setEmptyData] = useState("");
+
+  const [noShowBudget, setNoShowBudget] = useState(false);
 
   const setStateBudget = (eventChange) => {
     setbudgetValue(parseInt(eventChange.target.value));
@@ -32,33 +31,39 @@ const Budget = () => {
     } else {
       setEmptyData(false);
     }
+
+    // if (EmptyData === false && ErrorData === false) {
+    //   setNoShowBudget(true);
+    // }
+    // let tagForm = document.getElementById("form");
+    // tagForm.classList.add("displayForm");
   };
 
-  // setExpenses(budgetValue);
-  // setFunds(budgetValue);
+  // corregir la carga de los elementos form y ingreso de presupuesto
 
   return (
     <Fragment>
       <div className="principal-content content">
         {ErrorData === true ? (
-          <Error message="Los datos ingresados incorrectos" />
+          <Error message="Los datos ingresados son incorrectos" />
         ) : null}
-
         {EmptyData === true ? <Error message="Favor ingresar datos" /> : null}
-
-        <form onSubmit={addBudget}>
-          <h2>Coloca tu Presupuesto</h2>
-          <input
-            type="number"
-            placeholder="ingrese tu presupuesto"
-            className="u-full-width"
-            onChange={setStateBudget}
-          ></input>
-          <button type="submit" className="button-primary u-full-width">
-            ingresar presupuesto
-          </button>
-        </form>
-        <Form />
+        {EmptyData === false && ErrorData === false ? ( //carga de condicional de componente
+          <Form budgetValue={budgetValue} />
+        ) : (
+          <form onSubmit={addBudget}>
+            <h2>Coloca tu Presupuesto</h2>
+            <input
+              type="number"
+              placeholder="ingrese tu presupuesto"
+              className="u-full-width"
+              onChange={setStateBudget}
+            ></input>
+            <button type="submit" className="button-primary u-full-width">
+              ingresar presupuesto
+            </button>
+          </form>
+        )}
       </div>
     </Fragment>
   );
