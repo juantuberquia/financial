@@ -10,8 +10,6 @@ const Budget = () => {
   // hooks bugget empty
   const [EmptyData, setEmptyData] = useState("");
 
-  const [noShowBudget, setNoShowBudget] = useState(false);
-
   const setStateBudget = (eventChange) => {
     setbudgetValue(parseInt(eventChange.target.value));
   };
@@ -31,15 +29,7 @@ const Budget = () => {
     } else {
       setEmptyData(false);
     }
-
-    // if (EmptyData === false && ErrorData === false) {
-    //   setNoShowBudget(true);
-    // }
-    // let tagForm = document.getElementById("form");
-    // tagForm.classList.add("displayForm");
   };
-
-  // corregir la carga de los elementos form y ingreso de presupuesto
 
   return (
     <Fragment>
