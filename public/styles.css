@@ -45,6 +45,7 @@ h2 {
   font-size: 3rem !important;
   text-align: center;
 }
+/* campo */
 .camp {
   margin-bottom: 2rem;
 }
@@ -78,30 +79,29 @@ h2 {
   background-color: #fff3cd;
   border-color: #ffeeba;
 }
-.gastos-realizados {
+/* gastos realizados */
+.expensesMade {
   margin-bottom: 2rem;
-}
-.gastos-realizados li {
   list-style: none;
   margin-bottom: 0rem;
   border-bottom: 1px solid #e1e1e1;
   padding: 1rem 0;
-}
-.gastos-realizados li:last-of-type {
-  margin-bottom: 0 !important;
-}
-.gastos-realizados li p {
   display: flex;
   justify-content: space-between;
+}
+.expensesMade li:last-of-type {
+  margin-bottom: 0 !important;
+}
+.expensesMade p {
   align-items: center;
   margin: 0;
+  padding: 1rem;
+  color: black;
 }
-.gastos-realizados li p .gasto {
+
+/* gasto */
+.listExpense {
   background-color: #004085;
   padding: 1rem;
   color: white;
 }
-
-/* .displayForm {
-  display: none;
-} */

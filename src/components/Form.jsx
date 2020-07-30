@@ -1,45 +1,50 @@
 import React, { useState } from "react";
 import Error from "./Error";
 import Expenses from "./Expenses";
-import uuid from "uuid/v4";
+import shortid from "shortid";
 
 const Form = ({ budgetValue }) => {
-  // // hooks gastos y presupuesto
+  // // hooks gastos
   const [expenses, setExpenses] = useState({
     nameExpenses: "",
     valueExpense: "",
   });
-
-  // alamacenar hooks
+  // almacenar gastos
   const [listExpenses, setListExpenses] = useState([]);
-
-  // hooks validar datos
+  // hooks validar dato presupuesto
   const [ErrorData, setErrorData] = useState();
-  // hooks gastos valor vacio
   const [EmptyData, setEmptyData] = useState();
+  // validar los datos de los gastos ingresados
 
   const { nameExpenses, valueExpense } = expenses;
 
   const addExpenses = (e) => {
     e.preventDefault();
 
-    // validaciones dato
+    // validar valor del gasto
     if (valueExpense < 0) {
       setErrorData(true);
       return;
     } else {
       setErrorData(false);
     }
-    // validaciones
-    if (isNaN(valueExpense) || valueExpense === 0) {
+
+    if (isNaN(valueExpense) || valueExpense === 0 || nameExpenses === "") {
       setEmptyData(true);
       return;
     } else {
       setEmptyData(false);
     }
-
-    expenses.id = uuid();
+    expenses.id = shortid.generate();
     setListExpenses([...listExpenses, expenses]);
+
+    console.log(listExpenses);
+
+    // reiniciar formulario
+    setExpenses({
+      nameExpenses: "",
+      valueExpense: "",
+    });
   };
 
   function setState(event) {
@@ -49,7 +54,6 @@ const Form = ({ budgetValue }) => {
     });
   }
 
-  // let conta = 0;
   return (
     <div className="row">
       <div className="one-half column">
@@ -87,13 +91,14 @@ const Form = ({ budgetValue }) => {
         </form>
       </div>
       <div className="one-half column">
-        {listExpenses.map((i) => (
-          <Expenses
-            key={i.id}
-            expenses={i}
-            // deleteAppomt={deleteAppomt}
-          />
-        ))}
+        <h2>Listado de gastos</h2>
+        {ErrorData === false && EmptyData === false ? (
+          <div>
+            {listExpenses.map((i) => (
+              <Expenses key={i.id} expenses={i} />
+            ))}
+          </div>
+        ) : null}
       </div>
     </div>
   );
