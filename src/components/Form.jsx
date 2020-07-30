@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Error from "./Error";
 import Expenses from "./Expenses";
 import shortid from "shortid";
+// import Remaining from "./Remaining";
 
 const Form = ({ budgetValue }) => {
   // // hooks gastos
@@ -14,7 +15,12 @@ const Form = ({ budgetValue }) => {
   // hooks validar dato presupuesto
   const [ErrorData, setErrorData] = useState();
   const [EmptyData, setEmptyData] = useState();
-  // validar los datos de los gastos ingresados
+
+  // valor restante
+  const [remaining, setRemaining] = useState(budgetValue);
+
+  // validar si gasto es mayor presupuesto
+  const [validateExpenses, SetValidateExpenses] = useState(false);
 
   const { nameExpenses, valueExpense } = expenses;
 
@@ -38,7 +44,12 @@ const Form = ({ budgetValue }) => {
     expenses.id = shortid.generate();
     setListExpenses([...listExpenses, expenses]);
 
-    console.log(listExpenses);
+    if (valueExpense > remaining) {
+      SetValidateExpenses(true);
+    } else {
+      SetValidateExpenses(false);
+      setRemaining(remaining - valueExpense);
+    }
 
     // reiniciar formulario
     setExpenses({
@@ -92,13 +103,28 @@ const Form = ({ budgetValue }) => {
       </div>
       <div className="one-half column">
         <h2>Listado de gastos</h2>
-        {ErrorData === false && EmptyData === false ? (
+        {ErrorData === false &&
+        EmptyData === false &&
+        validateExpenses === false ? (
           <div>
             {listExpenses.map((i) => (
               <Expenses key={i.id} expenses={i} />
             ))}
           </div>
         ) : null}
+
+        {validateExpenses === true ? (
+          <Error message="sobrepaso presupuesto" />
+        ) : (
+          <div>
+            <div className="alert alert-primary">
+              <p> Presupuesto: {budgetValue} </p>
+            </div>
+            <div className="alert">
+              <p> Restante: {remaining} </p>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
