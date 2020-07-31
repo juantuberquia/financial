@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import Error from "./Error";
 import Expenses from "./Expenses";
 import shortid from "shortid";
-// import Remaining from "./Remaining";
+import { analizeBudget } from "../helper";
+import PropTypes from "prop-types";
 
 const Form = ({ budgetValue }) => {
   // // hooks gastos
@@ -44,6 +45,7 @@ const Form = ({ budgetValue }) => {
     expenses.id = shortid.generate();
     setListExpenses([...listExpenses, expenses]);
 
+    // validar si gasto es mayor que presupuesto
     if (valueExpense > remaining) {
       SetValidateExpenses(true);
     } else {
@@ -120,7 +122,7 @@ const Form = ({ budgetValue }) => {
             <div className="alert alert-primary">
               <p> Presupuesto: {budgetValue} </p>
             </div>
-            <div className="alert">
+            <div className={analizeBudget(budgetValue, remaining)}>
               <p> Restante: {remaining} </p>
             </div>
           </div>
@@ -128,6 +130,12 @@ const Form = ({ budgetValue }) => {
       </div>
     </div>
   );
+};
+
+Form.protoType = {
+  budgetValue: PropTypes.number.isRequired,
+  message: PropTypes.string.isRequired,
+  expenses: PropTypes.array.isRequired,
 };
 
 export default Form;

@@ -1,6 +1,7 @@
 import React, { Fragment, useState } from "react";
 import Error from "../components/Error";
 import Form from "../components/Form";
+import PropTypes from "prop-types";
 
 const Budget = () => {
   // hooks setear el valor ingresado
@@ -57,6 +58,10 @@ const Budget = () => {
       </div>
     </Fragment>
   );
+};
+Budget.protoType = {
+  message: PropTypes.string.isRequired,
+  budgetValue: PropTypes.number.isRequired,
 };
 
 export default Budget;
