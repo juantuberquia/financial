@@ -1,8 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const Error = ({ message }) => {
-  return <p className="alert alert-danger error"> {message}</p>;
+const Error = ({ message, value }) => {
+  return (
+    <p className="alert alert-danger error">
+      {message} {value} $
+    </p>
+  );
 };
 
 Error.propTypes = {

@@ -1,12 +1,14 @@
 import React from "react";
 import Headering from "./components/Headering";
 import Budget from "./components/Budget";
+// import ListaExpenses from "./components/ListaExpenses";
 
 function App() {
   return (
     <div className="container">
-      <Headering></Headering>
-      <Budget></Budget>
+      <Headering />
+      <Budget />
+      {/* <ListaExpenses /> */}
     </div>
   );
 }

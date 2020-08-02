@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import Error from "./Error";
-import Expenses from "./Expenses";
 import shortid from "shortid";
-import { analizeBudget } from "../helper";
+import Alert from "./Alert";
 import PropTypes from "prop-types";
+
+import ListaExpenses from "./ListaExpenses";
 
 const Form = ({ budgetValue }) => {
   // // hooks gastos
@@ -22,6 +23,9 @@ const Form = ({ budgetValue }) => {
 
   // validar si gasto es mayor presupuesto
   const [validateExpenses, SetValidateExpenses] = useState(false);
+
+  // dato del soprepaso del presupuesto
+  const [expensesOver, SetExpensesOver] = useState(0);
 
   const { nameExpenses, valueExpense } = expenses;
 
@@ -45,8 +49,10 @@ const Form = ({ budgetValue }) => {
     expenses.id = shortid.generate();
     setListExpenses([...listExpenses, expenses]);
 
+    // let valueOver = 0
     // validar si gasto es mayor que presupuesto
     if (valueExpense > remaining) {
+      SetExpensesOver((remaining - valueExpense) * -1);
       SetValidateExpenses(true);
     } else {
       SetValidateExpenses(false);
@@ -104,27 +110,18 @@ const Form = ({ budgetValue }) => {
         </form>
       </div>
       <div className="one-half column">
-        <h2>Listado de gastos</h2>
-        {ErrorData === false &&
-        EmptyData === false &&
-        validateExpenses === false ? (
-          <div>
-            {listExpenses.map((i) => (
-              <Expenses key={i.id} expenses={i} />
-            ))}
-          </div>
-        ) : null}
-
+        <ListaExpenses
+          listExpenses={listExpenses}
+          expenses={expenses}
+          ErrorData={ErrorData}
+          EmptyData={EmptyData}
+          validateExpenses={validateExpenses}
+        />
         {validateExpenses === true ? (
-          <Error message="sobrepaso presupuesto" />
+          <Error message="sobrepaso presupuesto por: " value={expensesOver} />
         ) : (
           <div>
-            <div className="alert alert-primary">
-              <p> Presupuesto: {budgetValue} </p>
-            </div>
-            <div className={analizeBudget(budgetValue, remaining)}>
-              <p> Restante: {remaining} </p>
-            </div>
+            <Alert budgetValue={budgetValue} remaining={remaining} />
           </div>
         )}
       </div>
@@ -136,6 +133,7 @@ Form.protoType = {
   budgetValue: PropTypes.number.isRequired,
   message: PropTypes.string.isRequired,
   expenses: PropTypes.array.isRequired,
+  value: PropTypes.number.isRequired,
 };
 
 export default Form;
