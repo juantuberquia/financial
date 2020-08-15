@@ -1,3 +1,17 @@
+# financial admin
+
+## ✍🏻 Description
+This app was built in React.js, the goal, is  financial manage.
+
+You can see the result here → [Financial Admin]  https://financialplan.netlify.app
+
+## Technologies
+1. HTML
+2. CSS
+3. React.js -> hooks
+4. skeleton 
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
